@@ -21,10 +21,10 @@ export default function Guess({ word, guess, isPlayed }: Props) {
 
   function getStateColor(state: LetterState): string {
     const colorMap: Record<LetterState, string> = {
-      [LetterState.unknown]: 'lightgrey',
-      [LetterState.missing]: 'darkgrey',
-      [LetterState.present]: 'yellow',
-      [LetterState.correct]: 'green',
+      [LetterState.unknown]: 'bg-gray-300',
+      [LetterState.missing]: 'bg-gray-400',
+      [LetterState.present]: 'bg-yellow-300',
+      [LetterState.correct]: 'bg-green-500',
     };
 
     return colorMap[state];
@@ -38,7 +38,7 @@ export default function Guess({ word, guess, isPlayed }: Props) {
   return (
     <span>
       {results.map((result, index) => (
-        <span key={index} style={{ backgroundColor: getStateColor(result.state) }}>
+        <span key={index} className={getStateColor(result.state)}>
           {result.letter}
         </span>
       ))}
