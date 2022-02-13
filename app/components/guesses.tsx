@@ -41,12 +41,12 @@ export default function Guesses({ word }: Props) {
   useKey(keyFilter, keyFunction, { event: 'keyup' });
 
   return (
-    <ul>
+    <div className='inline-block'>
       {guesses.map((guess, index) => (
-        <li key={index}>
+        <div key={index}>
           <Guess word={word} guess={guess} isPlayed={currentIndex > index} />
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

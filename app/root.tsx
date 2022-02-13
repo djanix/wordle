@@ -23,11 +23,13 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className='p-6'>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        {process.env.NODE_ENV === 'development' && <LiveReload />}
+      <body>
+        <div className='container mx-auto px-4'>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          {process.env.NODE_ENV === 'development' && <LiveReload />}
+        </div>
       </body>
     </html>
   );

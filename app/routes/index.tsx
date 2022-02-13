@@ -11,7 +11,7 @@ export default function Index() {
   const word = useLoaderData<string>();
 
   return (
-    <div style={{ fontFamily: 'system-ui, sans-serif', lineHeight: '1.4' }}>
+    <div className='text-center'>
       <h1>Wordle</h1>
       <h2>{word}</h2>
       <Guesses word={word} />
