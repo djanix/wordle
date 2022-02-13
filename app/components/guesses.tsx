@@ -1,6 +1,8 @@
-import { useKey } from 'react-use';
 import { useState } from 'react';
+import { useKey } from 'react-use';
 import Guess from '~/components/guess';
+import { useRecoilState } from 'recoil';
+import { gameStatsLossState, gameStatsStreakState, gameStatsWinState } from '~/store';
 
 type Words = [string, string, string, string, string];
 
@@ -11,9 +13,13 @@ type Props = {
 export default function Guesses({ word }: Props) {
   const [guesses, setGuesses] = useState<Words>(['', '', '', '', '']);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [, setGameStatsLoss] = useRecoilState(gameStatsLossState);
+  const [, setGameStatsWin] = useRecoilState(gameStatsWinState);
+  const [, setGameStatsStreak] = useRecoilState(gameStatsStreakState);
 
   const keyFilter = (event: KeyboardEvent) => {
-    return event.key === 'Backspace' || event.key === 'Enter' || (event.keyCode >= 65 && event.keyCode <= 90);
+    const letters = /^[A-Za-z]+$/;
+    return event.key === 'Backspace' || event.key === 'Enter' || !!event.key.match(letters);
   };
 
   const keyFunction = ({ key }: KeyboardEvent) => {
@@ -22,6 +28,19 @@ export default function Guesses({ word }: Props) {
     if (key === 'Enter') {
       if (currentIndex >= guesses.length) return;
       if (guesses[currentIndex].length < 5) return;
+
+      if (guesses[currentIndex] === word) {
+        setGameStatsWin((val) => val + 1);
+        setGameStatsStreak((val) => val + 1);
+        return;
+      }
+
+      if (currentIndex === guesses.length - 1) {
+        setGameStatsLoss((val) => val + 1);
+        setGameStatsStreak(0);
+        return;
+      }
+
       return setCurrentIndex((currentIndex) => currentIndex + 1);
     }
 

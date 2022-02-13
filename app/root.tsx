@@ -1,5 +1,7 @@
 import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
 import type { MetaFunction } from 'remix';
+import { RecoilRoot } from 'recoil';
+
 import styles from './tailwind.css';
 import normalize from '../styles/modern-normalize.css';
 
@@ -23,14 +25,17 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <div className='container mx-auto px-4'>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-          {process.env.NODE_ENV === 'development' && <LiveReload />}
-        </div>
-      </body>
+
+      <RecoilRoot>
+        <body>
+          <div className='container mx-auto px-4'>
+            <Outlet />
+            <ScrollRestoration />
+            <Scripts />
+            {process.env.NODE_ENV === 'development' && <LiveReload />}
+          </div>
+        </body>
+      </RecoilRoot>
     </html>
   );
 }
