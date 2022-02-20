@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 
 import styles from './tailwind.css';
 import normalize from '../styles/modern-normalize.css';
+import App from '~/app';
 
 export function links() {
   return [
@@ -16,9 +17,9 @@ export const meta: MetaFunction = () => {
   return { title: 'Wordle game' };
 };
 
-export default function App() {
+export default function Root() {
   return (
-    <html lang='en'>
+    <html lang='en' className='h-full'>
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width,initial-scale=1' />
@@ -27,14 +28,7 @@ export default function App() {
       </head>
 
       <RecoilRoot>
-        <body>
-          <div className='container mx-auto px-4'>
-            <Outlet />
-            <ScrollRestoration />
-            <Scripts />
-            {process.env.NODE_ENV === 'development' && <LiveReload />}
-          </div>
-        </body>
+        <App />
       </RecoilRoot>
     </html>
   );

@@ -1,6 +1,12 @@
 import { atom } from 'recoil';
 import { localStorageEffect } from './effects';
 
+export const darkModeState = atom({
+  key: 'darkModeState',
+  default: false,
+  effects: [localStorageEffect('darkMode')],
+});
+
 export const gameStatsWinState = atom({
   key: 'gameStatsWinState',
   default: 0,
