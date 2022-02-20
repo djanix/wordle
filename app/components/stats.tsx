@@ -1,10 +1,10 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { gameStatsWinState, gameStatsLossState, gameStatsStreakState } from '~/store';
 
 export default function Stats() {
-  const [gameStatsWin] = useRecoilState(gameStatsWinState);
-  const [gameStatsLoss] = useRecoilState(gameStatsLossState);
-  const [gameStatsStreak] = useRecoilState(gameStatsStreakState);
+  const gameStatsWin = useRecoilValue(gameStatsWinState);
+  const gameStatsLoss = useRecoilValue(gameStatsLossState);
+  const gameStatsStreak = useRecoilValue(gameStatsStreakState);
 
   return (
     <div className='mt-10'>
