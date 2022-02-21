@@ -1,4 +1,4 @@
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
+import { Links, Meta } from 'remix';
 import type { MetaFunction } from 'remix';
 import { RecoilRoot } from 'recoil';
 
