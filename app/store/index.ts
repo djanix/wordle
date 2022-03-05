@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { localStorageEffect } from './effects';
+import { Guesses } from '~/types';
 
 export const darkModeState = atom({
   key: 'darkModeState',
@@ -23,4 +24,14 @@ export const gameStatsStreakState = atom({
   key: 'gameStatsStreakState',
   default: 0,
   effects: [localStorageEffect('game_stats_streak')],
+});
+
+export const guessesState = atom<Guesses>({
+  key: 'guessesState',
+  default: ['', '', '', '', ''],
+});
+
+export const currentGuessIndexState = atom({
+  key: 'currentGuessIndexState',
+  default: 0,
 });

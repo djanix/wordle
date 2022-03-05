@@ -1,18 +1,22 @@
-import { useState } from 'react';
 import { useKey } from 'react-use';
 import Guess from '~/components/guess';
 import { useRecoilState } from 'recoil';
-import { gameStatsLossState, gameStatsStreakState, gameStatsWinState } from '~/store';
-
-type Words = [string, string, string, string, string];
+import {
+  gameStatsLossState,
+  gameStatsStreakState,
+  gameStatsWinState,
+  guessesState,
+  currentGuessIndexState,
+} from '~/store';
+import { Guesses } from '~/types';
 
 type Props = {
   word: string;
 };
 
 export default function Guesses({ word }: Props) {
-  const [guesses, setGuesses] = useState<Words>(['', '', '', '', '']);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentGuessIndex, setCurrentGuessIndex] = useRecoilState(currentGuessIndexState);
+  const [guesses, setGuesses] = useRecoilState(guessesState);
   const [, setGameStatsLoss] = useRecoilState(gameStatsLossState);
   const [, setGameStatsWin] = useRecoilState(gameStatsWinState);
   const [, setGameStatsStreak] = useRecoilState(gameStatsStreakState);
@@ -23,37 +27,37 @@ export default function Guesses({ word }: Props) {
   };
 
   const keyFunction = ({ key }: KeyboardEvent) => {
-    if (currentIndex >= guesses.length) return;
+    if (currentGuessIndex >= guesses.length) return;
 
     if (key === 'Enter') {
-      if (currentIndex >= guesses.length) return;
-      if (guesses[currentIndex].length < 5) return;
+      if (currentGuessIndex >= guesses.length) return;
+      if (guesses[currentGuessIndex].length < 5) return;
 
-      if (guesses[currentIndex] === word) {
+      if (guesses[currentGuessIndex] === word) {
         setGameStatsWin((val) => val + 1);
         setGameStatsStreak((val) => val + 1);
         return;
       }
 
-      if (currentIndex === guesses.length - 1) {
+      if (currentGuessIndex === guesses.length - 1) {
         setGameStatsLoss((val) => val + 1);
         setGameStatsStreak(0);
         return;
       }
 
-      return setCurrentIndex((currentIndex) => currentIndex + 1);
+      return setCurrentGuessIndex((currentIndex) => currentIndex + 1);
     }
 
     if (key === 'Backspace') {
-      const guessesCopy: Words = [...guesses];
-      guessesCopy[currentIndex] = guessesCopy[currentIndex].slice(0, -1);
+      const guessesCopy: Guesses = [...guesses];
+      guessesCopy[currentGuessIndex] = guessesCopy[currentGuessIndex].slice(0, -1);
       return setGuesses(guessesCopy);
     }
 
-    if (guesses[currentIndex].length >= 5) return;
+    if (guesses[currentGuessIndex].length >= 5) return;
 
-    const guessesCopy: Words = [...guesses];
-    guessesCopy[currentIndex] = guessesCopy[currentIndex] + key;
+    const guessesCopy: Guesses = [...guesses];
+    guessesCopy[currentGuessIndex] = guessesCopy[currentGuessIndex] + key;
     setGuesses(guessesCopy);
   };
 
@@ -63,7 +67,7 @@ export default function Guesses({ word }: Props) {
     <div className='inline-block'>
       {guesses.map((guess, index) => (
         <div key={index}>
-          <Guess word={word} guess={guess} isPlayed={currentIndex > index} />
+          <Guess word={word} guess={guess} isPlayed={currentGuessIndex > index} />
         </div>
       ))}
     </div>
